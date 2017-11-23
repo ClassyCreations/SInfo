@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {RestProvider} from "../../providers/rest/rest";
 import {Observable} from "rxjs/Observable";
+import {LoginPage} from "../login/login";
 
 @Component({
   selector: 'page-list',
@@ -21,13 +22,17 @@ export class ListPage {
     return null;
   }
 
-  ionViewDidLoad() {
-    this.getCourses();
-  }
-
   constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: RestProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
+  }
+
+  ionViewWillEnter() {
+    if (!RestProvider.areCredsAvailable()) {
+      this.navCtrl.push(LoginPage);
+    } else {
+      this.getCourses();
+    }
   }
 
   itemTapped(event, item) {
@@ -35,5 +40,10 @@ export class ListPage {
     this.navCtrl.push(ListPage, {
       item: item
     });
+  }
+
+  doRefresh(refresher) {
+    this.getCourses();
+    refresher.complete();
   }
 }

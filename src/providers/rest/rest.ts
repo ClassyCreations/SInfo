@@ -11,9 +11,10 @@ import { Injectable } from '@angular/core';
 export class RestProvider {
   static username: string;
   static password: string;
+  static districtId: string;
 
-  static areCredsAvailable() {
-    return (RestProvider.username != null && RestProvider.password != null);
+  static areCredsAvailable(): boolean {
+    return (RestProvider.username != null && RestProvider.password != null && RestProvider.districtId != null);
   }
 
   constructor(public http: HttpClient) {
@@ -21,8 +22,8 @@ export class RestProvider {
   }
 
   getCoursesList() {
-      return this.http.get<JSONResponse>("https://aspencheck.herokuapp.com/api/v1/ma-melrose/aspen/course", {
-        headers: new HttpHeaders().set('ASPEN_UNAME', 'USERNAME').set('ASPEN_PASS', 'PASSWORD'),
+      return this.http.get<JSONResponse>("https://aspencheck.herokuapp.com/api/v1/" + RestProvider.districtId + "/aspen/course", {
+        headers: new HttpHeaders().set('ASPEN_UNAME', RestProvider.username).set('ASPEN_PASS', RestProvider.password),
       })
   }
 
