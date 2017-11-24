@@ -13,11 +13,13 @@ export class CoursesPage {
   courses: any[];
   shownItems: Map<String, boolean> = new Map();
 
-  getCourses(): Observable<object[]> {
+  getCourses(refresher?): Observable<object[]> {
     this.restProvider.getCoursesList()
       .subscribe(data => {
         console.log(data);
         this.courses = data.data;
+        this.shownItems = new Map();
+        if (refresher != null) refresher.complete();
       });
     return null;
   }
@@ -29,7 +31,7 @@ export class CoursesPage {
 
   ionViewWillEnter() {
     if (RestProvider.areCredsAvailable()) {
-      if (this.courses == null) this.refreshAll();
+      if (this.courses == null) this.doRefresh();
     } else {
       this.navCtrl.push(LoginPage);
     }
@@ -55,12 +57,7 @@ export class CoursesPage {
     }
   }
 
-  refreshAll() {
-    this.getCourses();
-  }
-
-  doRefresh(refresher) {
-    this.refreshAll();
-    refresher.complete();
+  doRefresh(refresher?) {
+    this.getCourses(refresher);
   }
 }
