@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
+  <ion-refresher (ionRefresh)="doRefresh($event)" pullMax="null">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
       pullingText="Pull to refresh"
@@ -29,7 +29,7 @@
 
         <ul ion-item [hidden]='shownItems.get(item.name) == undefinedType || shownItems.get(item.name) == false'>
           <li *ngFor="let assign of item.assignments">
-            <h5 item-start>{{assign.name}}: <strong>{{assign.credit}}</strong></h5>
+            <h5 item-start>{{assign.name}}<span *ngIf="assign.credit">: <strong>{{assign.credit}}</strong></span></h5>
           </li>
         </ul>
       </button>

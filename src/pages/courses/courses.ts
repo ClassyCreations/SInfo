@@ -37,15 +37,22 @@ export class CoursesPage {
 
   itemTapped(event, item) {
     this.shownItems.set(item.name, !this.shownItems.get(item.name));
-    /*
-    this.restProvider.getCourseInformation(item.id).subscribe(
-      data => {
-        item = data.data;
-        console.log(item);
-        this.shownItems.set(item.name, !this.shownItems.get(item.name));
-      });
-      */
-    //TODO work on getting each click to become a request instead of one big one at render time
+    if (item.assignments == null) {
+      let loadingAssignmentsTest = [];
+      loadingAssignmentsTest[0]= {};
+      loadingAssignmentsTest[0].name = "Loading...";
+
+      item.assignments = loadingAssignmentsTest;
+      this.restProvider.getCourseInformation(item.id).subscribe(
+        data => {
+          item.assignments = data.data.assignments;
+          console.log(data.data.assignments);
+          if (item.assignments[0] == null) {
+            item.assignments[0] = {};
+            item.assignments[0].name = "No Assignments";
+          }
+        });
+    }
   }
 
   refreshAll() {
