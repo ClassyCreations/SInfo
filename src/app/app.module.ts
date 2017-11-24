@@ -5,7 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import {CoursesPage} from '../pages/courses/courses';
 import {LoginPage} from "../pages/login/login";
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -17,7 +17,7 @@ import { RestProvider } from '../providers/rest/rest';
     MyApp,
     HomePage,
     LoginPage,
-    ListPage
+    CoursesPage
   ],
   imports: [
     BrowserModule,
@@ -29,7 +29,7 @@ import { RestProvider } from '../providers/rest/rest';
     MyApp,
     HomePage,
     LoginPage,
-    ListPage
+    CoursesPage
   ],
   providers: [
     StatusBar,

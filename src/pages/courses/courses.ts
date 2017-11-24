@@ -5,12 +5,11 @@ import {Observable} from "rxjs/Observable";
 import {LoginPage} from "../login/login";
 
 @Component({
-  selector: 'page-list',
-  templateUrl: 'list.html'
+  selector: 'page-courses',
+  templateUrl: 'courses.html'
 })
-export class ListPage {
+export class CoursesPage {
   selectedItem: any;
-  icons: string[];
   courses: object[];
 
   getCourses(): Observable<object[]> {
@@ -37,7 +36,7 @@ export class ListPage {
 
   itemTapped(event, item) {
     // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
+    this.navCtrl.push(CoursesPage, {
       item: item
     });
   }
