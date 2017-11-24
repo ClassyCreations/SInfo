@@ -20,7 +20,7 @@ export class LoginPage {
       RestProvider.password = this.userData.password;
       RestProvider.districtId = this.userData.districtId;
 
-      //localStorage.setItem('userCreds', JSON.stringify(this.userData));
+      //localStorage.setItem('userCreds', JSON.stringify(this.userData)); // TODO store in encrypted fashion
       this.navCtrl.pop();
     }
   }

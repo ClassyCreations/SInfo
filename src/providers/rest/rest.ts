@@ -1,12 +1,6 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-/*
-  Generated class for the RestProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class RestProvider {
   static username: string;
@@ -14,7 +8,18 @@ export class RestProvider {
   static districtId: string;
 
   static areCredsAvailable(): boolean {
-    return (RestProvider.username != null && RestProvider.password != null && RestProvider.districtId != null);
+    return (RestProvider.checkSetUserCredsFromMemory() || (RestProvider.username != null && RestProvider.password != null && RestProvider.districtId != null));
+  }
+
+  private static checkSetUserCredsFromMemory(): boolean {
+    if (JSON.parse(localStorage.getItem('userCreds')) != null) {
+      let userCreds = JSON.parse(localStorage.getItem('userCreds'));
+      RestProvider.username = userCreds.username;
+      RestProvider.password = userCreds.password;
+      RestProvider.districtId = userCreds.districtId;
+      return true;
+    }
+    return false;
   }
 
   constructor(public http: HttpClient) {
@@ -22,9 +27,15 @@ export class RestProvider {
   }
 
   getCoursesList() {
-      return this.http.get<JSONResponse>("https://aspencheck.herokuapp.com/api/v1/" + RestProvider.districtId + "/aspen/course", {
+      return this.http.get<JSONResponse>("https://aspencheck.herokuapp.com/api/v1/" + RestProvider.districtId + "/aspen/course?moreData=true", {
         headers: new HttpHeaders().set('ASPEN_UNAME', RestProvider.username).set('ASPEN_PASS', RestProvider.password),
       })
+  }
+
+  getCourseInformation(courseId: string) {
+    return this.http.get<JSONResponse>("https://aspencheck.herokuapp.com/api/v1/" + RestProvider.districtId + "/aspen/course/" +courseId, {
+      headers: new HttpHeaders().set('ASPEN_UNAME', RestProvider.username).set('ASPEN_PASS', RestProvider.password),
+    })
   }
 
 }

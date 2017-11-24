@@ -10,7 +10,8 @@ import {LoginPage} from "../login/login";
 })
 export class CoursesPage {
   selectedItem: any;
-  courses: object[];
+  courses: any[];
+  shownItems: Map<String, boolean> = new Map();
 
   getCourses(): Observable<object[]> {
     this.restProvider.getCoursesList()
@@ -27,22 +28,32 @@ export class CoursesPage {
   }
 
   ionViewWillEnter() {
-    if (!RestProvider.areCredsAvailable()) {
-      this.navCtrl.push(LoginPage);
+    if (RestProvider.areCredsAvailable()) {
+      if (this.courses == null) this.refreshAll();
     } else {
-      this.getCourses();
+      this.navCtrl.push(LoginPage);
     }
   }
 
   itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(CoursesPage, {
-      item: item
-    });
+    this.shownItems.set(item.name, !this.shownItems.get(item.name));
+    /*
+    this.restProvider.getCourseInformation(item.id).subscribe(
+      data => {
+        item = data.data;
+        console.log(item);
+        this.shownItems.set(item.name, !this.shownItems.get(item.name));
+      });
+      */
+    //TODO work on getting each click to become a request instead of one big one at render time
+  }
+
+  refreshAll() {
+    this.getCourses();
   }
 
   doRefresh(refresher) {
-    this.getCourses();
+    this.refreshAll();
     refresher.complete();
   }
 }
