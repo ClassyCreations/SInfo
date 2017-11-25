@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {RestProvider} from "../../providers/rest/rest";
-import {Observable} from "rxjs/Observable";
 import { allParse } from "../../lib/json";
 
 @Component({

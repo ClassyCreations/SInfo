@@ -2,5 +2,7 @@
   "name": "Sinfo",
   "app_id": "e303fda8",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }

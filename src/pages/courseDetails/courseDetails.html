@@ -3,6 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
+    <ion-title *ngIf="!course">Loading</ion-title>
     <ion-title *ngIf="course">{{course.name}}</ion-title>
   </ion-navbar>
 </ion-header>
