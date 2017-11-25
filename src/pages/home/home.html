@@ -3,10 +3,28 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Schedule</ion-title>
+    <ion-title>Schedule<span *ngIf="currentDay !== 0">: Day {{currentDay}}</span></ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <iframe style="height:100%;width:100%;" src="https://studenttech.tk/AspenDashReact/?displayOverrides=[%22header%22]"></iframe>
+  <ion-card class="schedule" *ngIf="isSchool">
+    <div *ngFor="let block of blockOrder; let index=index" [ngClass]="{'highlight': index == currentBlockNumber-1}">
+      {{block}}
+    </div>
+  </ion-card>
+
+  <hr *ngIf="isSchool && announcements.length > 0">
+
+  <ion-card class="announcements" *ngIf="announcements.length > 0">
+    <div class="header">
+      <div class="title">
+        <span>4</span> Announcements:
+      </div>
+    </div>
+    <hr>
+    <div class="textBox" *ngFor="let item of announcements">
+      <span class="title">{{item.title}}:</span> {{item.description}}
+    </div>
+  </ion-card>
 </ion-content>
