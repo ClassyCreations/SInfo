@@ -1,4 +1,11 @@
 page-course-details{
+  .loading{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .classInfo{
     padding: 8px;
     display: flex;

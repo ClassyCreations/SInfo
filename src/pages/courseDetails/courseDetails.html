@@ -31,4 +31,7 @@
       </tr>
     </table>
   </ion-card>
+  <div class="loading" *ngIf="!(course || assignments)">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
 </ion-content>

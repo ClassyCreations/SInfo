@@ -15,7 +15,6 @@ export class HomePage {
   currentDay: number = 0;
 
   announcements: Array<any> = [];
-  announcementIndex: number;
 
   scheduleProvider: Observable<any>;
   announcementsProvider: Observable<any>;

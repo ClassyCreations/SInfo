@@ -27,4 +27,8 @@
       <span class="title">{{item.title}}:</span> {{item.description}}
     </div>
   </ion-card>
+
+  <div class="loading" *ngIf="!(isSchool || announcements.length > 0)">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
 </ion-content>

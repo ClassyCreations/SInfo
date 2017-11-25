@@ -29,4 +29,7 @@
       </button>
       </ion-card>
     </ion-list>
+  <div class="loading" *ngIf="!courses">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
 </ion-content>
