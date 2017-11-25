@@ -45,7 +45,7 @@ export class RestProvider {
 
   getSchedule(){
     const options: Object = {
-      url: `https://aspencheck.herokuapp.com/api/v1/ma-melrose/aspen/schedule`
+      url: `https://aspencheck.herokuapp.com/api/v1/${RestProvider.districtId}/aspen/schedule`
     };
 
     return Rx.Observable.create(observer => {
@@ -68,7 +68,7 @@ export class RestProvider {
 
   getAnnouncements(){
     const options: Object = {
-      url: `https://aspencheck.herokuapp.com/api/v1/ma-melrose/announcements`
+      url: `https://aspencheck.herokuapp.com/api/v1/${RestProvider.districtId}/announcements`
     };
 
     return Rx.Observable.create(observer => {
