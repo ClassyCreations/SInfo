@@ -18,7 +18,7 @@
   </ion-refresher>
     <ion-list>
       <ion-card *ngFor="let item of courses" (click)="itemTapped($event, item)">
-      <button ion-item>
+      <button ion-item detail-none>
         <h1 item-start padding-right>A</h1>
         <h2>{{item.name}}</h2>
 
@@ -27,7 +27,7 @@
           {{item.currentTermGrade}}
         </div>
 
-        <ul ion-item [hidden]='shownItems.get(item.name) == undefinedType || shownItems.get(item.name) == false'>
+        <ul ion-item [hidden]='shownItems.get(item.name) == undefinedType || shownItems.get(item.name) == false' detail-none>
           <li *ngFor="let assign of item.assignments">
             <h5 item-start>{{assign.name}}<span *ngIf="assign.credit">: <strong>{{assign.credit}}</strong></span></h5>
           </li>

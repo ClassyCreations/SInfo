@@ -1,3 +1,58 @@
-page-home {
+@import '../../theme/variables';
 
+.schedule{
+  display: flex;
+  flex-direction: row;
+
+  div{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    max-height: 80px;
+    border-right: 1px solid #e6e6e6;
+  }
+
+  div:last-child{
+    border-right: none;
+  }
+
+  .highlight{
+    background-color: map_get($colors, highlight);
+  }
+}
+
+.announcements{
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+
+  .header{
+    flex-grow: 1;
+    display: flex;
+
+    .title{
+      font-size: 2.5vh;
+      font-weight: bold;
+    }
+
+    .button{
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  .textBox{
+    flex-grow: 3;
+    margin: 0px 0 20px 0;
+
+    .title{
+      font-weight: bold;
+    }
+  }
+
+  .textBox:last-child{
+    margin: 0;
+  }
 }
