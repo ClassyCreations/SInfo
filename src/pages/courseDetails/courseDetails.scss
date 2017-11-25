@@ -1,0 +1,44 @@
+page-course-details{
+  .classInfo{
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .teacherInfo{
+      font-size: 20px;
+      line-height: 20px;
+
+      span{
+        color: grey;
+        font-weight: 400;
+        font-size: 15px;
+        margin-left: 8px;
+      }
+    }
+
+    .grade{
+      margin-right: 10px;
+      font-size: 18px;
+    }
+  }
+
+  .workInfo{
+    .assignments{
+      width: 100%;
+      td{
+        padding: 8px;
+      }
+      th{
+        padding: 10px;
+      }
+      tr:nth-child(even){
+        background-color: #f8f8f8;
+      }
+      td,th{
+        border: 1px solid #ddd
+      }
+    }
+  }
+}

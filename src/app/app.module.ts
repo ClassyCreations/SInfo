@@ -7,6 +7,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {CoursesPage} from '../pages/courses/courses';
 import {LoginPage} from "../pages/login/login";
+import { CourseDetailsPage } from "../pages/courseDetails/courseDetails";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,7 +18,8 @@ import { RestProvider } from '../providers/rest/rest';
     MyApp,
     HomePage,
     LoginPage,
-    CoursesPage
+    CoursesPage,
+    CourseDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import { RestProvider } from '../providers/rest/rest';
     MyApp,
     HomePage,
     LoginPage,
-    CoursesPage
+    CoursesPage,
+    CourseDetailsPage
   ],
   providers: [
     StatusBar,
