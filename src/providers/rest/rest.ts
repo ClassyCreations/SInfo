@@ -9,7 +9,8 @@ import request from 'request';
 export class RestProvider {
   static username: string;
   static password: string;
-  static districtId: string;
+  //TODO: Change this so it does not have a default and the user enters their own district
+  static districtId: string = 'ma-melrose';
 
   static areCredsAvailable(): boolean {
     return (RestProvider.checkSetUserCredsFromMemory() || (RestProvider.username != null && RestProvider.password != null && RestProvider.districtId != null));
@@ -50,7 +51,7 @@ export class RestProvider {
     return Rx.Observable.create(observer => {
       //TODO: This needs to be changed such that the districtId is available
       //For now the check for districtId is simply bypassed and ma-melrose is used
-      if(typeof RestProvider.districtId === 'undefined' && false){
+      if(typeof RestProvider.districtId === 'undefined'){
         observer.error('districtId is not defined for schedule');
       }else{
         request(options, (err, res, body) => {
@@ -73,7 +74,7 @@ export class RestProvider {
     return Rx.Observable.create(observer => {
       //TODO: This needs to be changed such that the districtId is available
       //For now the check for districtId is simply bypassed and ma-melrose is used
-      if(typeof RestProvider.districtId !== 'undefined' && false){
+      if(typeof RestProvider.districtId === 'undefined'){
         observer.error('districtId is not defined for announcements');
       }else{
         request(options, (err, res, body) => {
