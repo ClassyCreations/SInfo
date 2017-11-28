@@ -2,33 +2,58 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as Rx from "rxjs/Observable";
 import { allParse } from '../../lib/json';
+import { Storage } from '@ionic/storage';
 
 import request from 'request';
+import {Observable} from "rxjs/Observable";
+import {Subscription} from "rxjs/Subscription";
 
 @Injectable()
 export class RestProvider {
   static username: string;
   static password: string;
   //TODO: Change this so it does not have a default and the user enters their own district
-  static districtId: string = 'ma-melrose';
+  static districtId: string;
 
-  static areCredsAvailable(): boolean {
-    return (RestProvider.checkSetUserCredsFromMemory() || (RestProvider.username != null && RestProvider.password != null && RestProvider.districtId != null));
-  }
+  credsObservable: Subscription;
+  credFinished: boolean = false;
 
-  private static checkSetUserCredsFromMemory(): boolean {
-    if (JSON.parse(localStorage.getItem('userCreds')) != null) {
-      let userCreds = JSON.parse(localStorage.getItem('userCreds'));
-      RestProvider.username = userCreds.username;
-      RestProvider.password = userCreds.password;
-      RestProvider.districtId = userCreds.districtId;
-      return true;
-    }
-    return false;
-  }
-
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, private storage: Storage) {
     console.log('Hello RestProvider Provider');
+    this.areCredsAvailable();
+  }
+
+  areCredsAvailable(): Rx.Observable<any> {
+    return Rx.Observable.create(observable => {
+      if(this.credFinished){
+        observable.next(true);
+      }else {
+        this.credsObservable = this.checkSetUserCredsFromMemory().subscribe(
+          (res) => {
+            observable.next(res || RestProvider.username != null && RestProvider.password != null && RestProvider.districtId != null);
+            this.credFinished = true;
+          }
+        )
+      }
+    })
+  }
+
+  checkSetUserCredsFromMemory(): Rx.Observable<any> {
+    return Rx.Observable.create(observer => {
+      console.log("UserCreds: ",this.storage.get('userCreds'));
+      this.storage.get('userCreds')
+        .then((userCreds) => {
+          console.log("UserCreds: ",userCreds);
+          if(userCreds){
+            RestProvider.username = userCreds.username;
+            RestProvider.password = userCreds.password;
+            RestProvider.districtId = userCreds.districtId;
+            observer.next(true);
+          }else{
+            observer.next(false);
+          }
+        });
+    });
   }
 
   getCoursesList() {
@@ -44,48 +69,56 @@ export class RestProvider {
   }
 
   getSchedule(){
-    const options: Object = {
-      url: `https://aspencheck.herokuapp.com/api/v1/${RestProvider.districtId}/aspen/schedule`
-    };
-
     return Rx.Observable.create(observer => {
-      //TODO: This needs to be changed such that the districtId is available
-      //For now the check for districtId is simply bypassed and ma-melrose is used
-      if(typeof RestProvider.districtId === 'undefined'){
-        observer.error('districtId is not defined for schedule');
-      }else{
-        request(options, (err, res, body) => {
-          if(err){
-            observer.error(err);
+      this.areCredsAvailable().subscribe((res) => {
+        if(res){
+          const options: Object = {
+            url: `https://aspencheck.herokuapp.com/api/v1/${RestProvider.districtId}/aspen/schedule`
+          };
+
+          //TODO: This needs to be changed such that the districtId is available
+          //For now the check for districtId is simply bypassed and ma-melrose is used
+          if(typeof RestProvider.districtId === 'undefined'){
+            observer.error(false);
           }else{
-            observer.next({res: res, body: allParse(body)});
+            request(options, (err, res, body) => {
+              if(err){
+                observer.error(true);
+              }else{
+                observer.next({res: res, body: allParse(body)});
+              }
+              observer.complete();
+            })
           }
-          observer.complete();
-        })
-      }
-    })
+        }else{
+
+        }
+      });
+    });
   }
 
   getAnnouncements(){
-    const options: Object = {
-      url: `https://aspencheck.herokuapp.com/api/v1/${RestProvider.districtId}/announcements`
-    };
-
     return Rx.Observable.create(observer => {
-      //TODO: This needs to be changed such that the districtId is available
-      //For now the check for districtId is simply bypassed and ma-melrose is used
-      if(typeof RestProvider.districtId === 'undefined'){
-        observer.error('districtId is not defined for announcements');
-      }else{
-        request(options, (err, res, body) => {
-          if(err){
-            observer.error(err);
-          }else{
-            observer.next({res: res, body: allParse(body)});
-          }
-          observer.complete();
-        })
-      }
+      this.areCredsAvailable().subscribe((res) => {
+        const options: Object = {
+          url: `https://aspencheck.herokuapp.com/api/v1/${RestProvider.districtId}/announcements`
+        };
+
+        //TODO: This needs to be changed such that the districtId is available
+        //For now the check for districtId is simply bypassed and ma-melrose is used
+        if(typeof RestProvider.districtId === 'undefined'){
+          observer.error(false);
+        }else{
+          request(options, (err, res, body) => {
+            if(err){
+              observer.error(true);
+            }else{
+              observer.next({res: res, body: allParse(body)});
+            }
+            observer.complete();
+          })
+        }
+      })
     })
   }
 }

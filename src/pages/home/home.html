@@ -8,7 +8,11 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="schedule" *ngIf="isSchool">
+  <ion-card class="error" *ngIf="scheduleError || announcementsError">
+    An error has occurred. Please check you internet connection and retry. If the error persists, please report to an AspenCheck admin.
+  </ion-card>
+
+  <ion-card class="schedule" *ngIf="blockOrder.length > 0">
     <div *ngFor="let block of blockOrder; let index=index" [ngClass]="{'highlight': index == currentBlockNumber-1}">
       {{block}}
     </div>
@@ -28,7 +32,7 @@
     </div>
   </ion-card>
 
-  <div class="loading" *ngIf="!(isSchool || announcements.length > 0)">
+  <div class="loading" *ngIf="!(blockOrder.length > 0 || announcements.length > 0 || isError)">
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
 </ion-content>

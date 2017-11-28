@@ -1,6 +1,10 @@
 @import '../../theme/variables';
 
 page-home {
+  .error{
+    padding: 10px;
+  }
+
   .loading {
     height: 100%;
     display: flex;

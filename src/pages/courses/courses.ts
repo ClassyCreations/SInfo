@@ -29,7 +29,7 @@ export class CoursesPage {
   }
 
   ionViewWillEnter() {
-    if (RestProvider.areCredsAvailable()) {
+    if (this.restProvider.areCredsAvailable()) {
       if (this.courses == null) this.doRefresh();
     } else {
       this.navCtrl.push(LoginPage);

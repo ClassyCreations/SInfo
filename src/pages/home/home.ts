@@ -10,16 +10,23 @@ import {Observable} from "rxjs/Observable";
 })
 export class HomePage {
   isSchool: boolean;
-  blockOrder: Array<string>;
+  blockOrder: Array<string> = [];
   currentBlockNumber: number;
   currentDay: number = 0;
 
   announcements: Array<any> = [];
 
+  scheduleError: boolean = false;
+  announcementsError: boolean = false;
+
   scheduleProvider: Observable<any>;
   announcementsProvider: Observable<any>;
 
   constructor(public navCtrl: NavController, public restProvider: RestProvider, private changeRef: ChangeDetectorRef) {
+
+  }
+
+  ionViewWillEnter(){
     this.scheduleProvider = this.restProvider.getSchedule();
     this.subBockOrder();
 
@@ -30,16 +37,19 @@ export class HomePage {
   subBockOrder(){
     this.scheduleProvider.subscribe(
       (res) => {
+        this.scheduleError = false;
         const body = res.body;
-        this.blockOrder = body.data.blockOrder;
-        this.currentDay = body.data.day;
-        this.isSchool = body.data.classInSession;
-        this.currentBlockNumber = body.data.blockOfDay;
+        this.blockOrder = body.data.blockOrder || [];
+        this.currentDay = body.data.day || 0;
+        this.isSchool = body.data.classInSession || false;
+        this.currentBlockNumber = body.data.blockOfDay || 6;
         this.changeRef.detectChanges();
       },
 
       (err) => {
+        this.scheduleError = true;
         console.log(err);
+        this.changeRef.detectChanges();
       },
     )
   }
@@ -52,13 +62,16 @@ export class HomePage {
   subAnnouncements(){
     this.announcementsProvider.subscribe(
       (res) => {
+        this.announcementsError = false;
         const body = res.body;
         this.announcements = body.data;
         this.changeRef.detectChanges();
       },
 
       (err) => {
-          console.log(err);
+        this.announcementsError = true;
+        console.log(err);
+        this.changeRef.detectChanges();
       }
     )
   }

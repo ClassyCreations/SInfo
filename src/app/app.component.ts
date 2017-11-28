@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {RestProvider} from "../providers/rest/rest";
+import {LoginPage} from "../pages/login/login";
 
 import { HomePage } from '../pages/home/home';
 import { CoursesPage } from '../pages/courses/courses';
@@ -16,7 +18,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any, icon: string}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public restProvider: RestProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -32,7 +34,18 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.restProvider.areCredsAvailable().subscribe(
+        (res) => {
+          console.log("User creds loaded from localStorage: "+res);
+          if(res){
+            console.log("DistrictId: ",RestProvider.districtId);
+            this.splashScreen.hide();
+          }else{
+            this.nav.push(LoginPage);
+            this.splashScreen.hide();
+          }
+        }
+      );
     });
   }
 
