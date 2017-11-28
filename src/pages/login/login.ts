@@ -16,9 +16,9 @@ export class LoginPage {
   login() {
     if (this.userData.username != "" && this.userData.password != "" && this.userData.districtId != "") {
       console.log("Attempting login with " + this.userData);
-      RestProvider.username = this.userData.username;
+      RestProvider.username = this.userData.username.toLowerCase();
       RestProvider.password = this.userData.password;
-      RestProvider.districtId = this.userData.districtId;
+      RestProvider.districtId = this.userData.districtId.toLowerCase();
 
       //localStorage.setItem('userCreds', JSON.stringify(this.userData)); // TODO store in encrypted fashion
       this.navCtrl.pop();
