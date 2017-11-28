@@ -5,7 +5,6 @@ import { allParse } from '../../lib/json';
 import { Storage } from '@ionic/storage';
 
 import request from 'request';
-import {Observable} from "rxjs/Observable";
 import {Subscription} from "rxjs/Subscription";
 
 @Injectable()
