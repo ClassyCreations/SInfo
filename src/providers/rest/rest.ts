@@ -22,6 +22,38 @@ export class RestProvider {
     this.areCredsAvailable();
   }
 
+  attemptLogin(username: string, password: string, districtId: string): Rx.Observable<any> {
+    return Rx.Observable.create(observable => {
+      const options: Object = {
+        url: `https://aspencheck.herokuapp.com/api/v1/${districtId}/aspen/checkLogin`,
+        headers: {
+          "ASPEN_UNAME": username,
+          "ASPEN_PASS": password,
+        }
+      };
+
+      request(options, (err, res, body) => {
+        console.log(res);
+        if(err){
+          observable.next(false);
+        }else if(res.statusCode !== 200){
+          observable.next(false);
+        }else{
+          body = allParse(body);
+          if(body.data){
+            RestProvider.username = username;
+            RestProvider.password = password;
+            RestProvider.districtId = districtId;
+            this.storage.set('username', username);
+            this.storage.set('password', password);
+            this.storage.set('districtId', districtId);
+          }
+          observable.next(body.data);
+        }
+      })
+    })
+  }
+
   areCredsAvailable(): Rx.Observable<any> {
     return Rx.Observable.create(observable => {
       if(this.credFinished){
@@ -39,20 +71,27 @@ export class RestProvider {
 
   checkSetUserCredsFromMemory(): Rx.Observable<any> {
     return Rx.Observable.create(observer => {
-      console.log("UserCreds: ",this.storage.get('userCreds'));
-      this.storage.get('userCreds')
-        .then((userCreds) => {
-          console.log("UserCreds: ",userCreds);
-          if(userCreds){
-            RestProvider.username = userCreds.username;
-            RestProvider.password = userCreds.password;
-            RestProvider.districtId = userCreds.districtId;
-            observer.next(true);
-          }else{
+      console.log("UserCreds: ", this.storage.get('userCreds'));
+      this.storage.forEach((value, key) => {
+        console.log(value, key)
+        if(key === 'username'){
+          RestProvider.username = value;
+        }
+        if(key === 'password'){
+          RestProvider.password = value;
+        }
+        if(key === 'districtId'){
+          RestProvider.districtId = value;
+        }
+      }).then(() => {
+          console.log("Stuff: ",RestProvider.username, RestProvider.password, RestProvider.districtId);
+          if(!(RestProvider.username && RestProvider.password && RestProvider.districtId)){
             observer.next(false);
+          }else{
+            observer.next(true);
           }
         });
-    });
+    })
   }
 
   getCoursesList() {

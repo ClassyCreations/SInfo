@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {RestProvider} from "../../providers/rest/rest";
-import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-login',
@@ -9,20 +8,30 @@ import { Storage } from '@ionic/storage';
 })
 export class LoginPage {
   userData = {username: "", password: "", districtId: ""};
+  loginFailed: boolean = false;
+  isLoading: boolean = false
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: RestProvider, private changeRef: ChangeDetectorRef) {
 
   }
 
   login() {
     if (this.userData.username != "" && this.userData.password != "" && this.userData.districtId != "") {
       console.log("Attempting login with " + this.userData);
-      RestProvider.username = this.userData.username.toLowerCase();
-      RestProvider.password = this.userData.password;
-      RestProvider.districtId = this.userData.districtId.toLowerCase();
+      this.loginFailed = false;
+      this.isLoading = true;
 
-      this.storage.set('userCreds', this.userData); // TODO store in encrypted fashion
-      this.navCtrl.pop();
+      this.restProvider.attemptLogin(this.userData.username.toLowerCase(), this.userData.password, this.userData.districtId.toLowerCase())
+        .subscribe((res) => {
+            console.log("Attemped Login: ",res);
+            this.isLoading = false;
+            if(res){
+              this.navCtrl.pop();
+            }else{
+              this.loginFailed = true;
+              this.changeRef.detectChanges();
+            }
+        });
     }
   }
 
