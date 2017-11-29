@@ -9,7 +9,7 @@ import {RestProvider} from "../../providers/rest/rest";
 export class LoginPage {
   userData = {username: "", password: "", districtId: ""};
   loginFailed: boolean = false;
-  isLoading: boolean = false
+  isLoading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: RestProvider, private changeRef: ChangeDetectorRef) {
 

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import * as Rx from "rxjs/Observable";
 import { allParse } from '../../lib/json';
 import { Storage } from '@ionic/storage';
+import * as openpgp from 'openpgp';
 
 import request from 'request';
 import {Subscription} from "rxjs/Subscription";
@@ -45,6 +46,12 @@ export class RestProvider {
             RestProvider.password = password;
             RestProvider.districtId = districtId;
             this.storage.set('username', username);
+            /* // TODO Find a way to submit (headers are too short)
+            this.gpgEncrypt(password).subscribe((encryptedPwd) => {
+              console.log("setting password to \n" + encryptedPwd);
+              this.storage.set('password', encryptedPwd);
+              });
+              */
             this.storage.set('password', password);
             this.storage.set('districtId', districtId);
           }
@@ -73,7 +80,7 @@ export class RestProvider {
     return Rx.Observable.create(observer => {
       console.log("UserCreds: ", this.storage.get('userCreds'));
       this.storage.forEach((value, key) => {
-        console.log(value, key)
+        console.log(value, key);
         if(key === 'username'){
           RestProvider.username = value;
         }
@@ -158,6 +165,43 @@ export class RestProvider {
         }
       })
     })
+  }
+
+  gpgEncrypt(msg: String): Rx.Observable<String> {
+    return Rx.Observable.create( observer => {
+      this.getGpgKeyFromServer("0xC8A1E2D47C35AB1C30288640940ED79CFA122C1A").subscribe((key1) => {
+        const mykey = key1;
+        this.getGpgKeyFromServer("0x716E07EA1891D9BF2724415A25B082C45A8DD7E5").subscribe((key2) => {
+          const thekey = key2;
+
+          let options = {
+            data: msg,
+            publicKeys: [
+              openpgp.key.readArmored(thekey).keys[0],
+              openpgp.key.readArmored(mykey).keys[0]]
+          };
+
+          openpgp.encrypt(options).then(function (ciphertext) {
+            console.log(ciphertext);
+            observer.next(ciphertext.data); // get raw encrypted packets as Uint8Array
+          });
+        });
+      });
+    });
+  }
+
+  getGpgKeyFromServer(query: String): Rx.Observable<openpgp.key> {
+    return Rx.Observable.create(observer => {
+      const hkp = new openpgp.HKP('https://pgp.mit.edu');
+
+      let options = {
+        query: query
+      };
+
+      hkp.lookup(options).then(function (key) {
+        observer.next(key);
+      });
+    });
   }
 }
 
