@@ -15,17 +15,17 @@
 
           <ion-item>
             <ion-label stacked>District ID</ion-label>
-            <ion-input type="text" name="districtId" [(ngModel)]="userData.districtId" placeholder="ma-melrose" autocapitalize="none"></ion-input>
+            <ion-input type="text" name="districtId" [pattern]="districtPattern" [(ngModel)]="userData.districtId" placeholder="ma-melrose" autocapitalize="none" required></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label stacked>Username</ion-label>
-            <ion-input type="text" name="username" [(ngModel)]="userData.username" placeholder="jsmith" autocapitalize="none"></ion-input>
+            <ion-input type="text" name="username" [(ngModel)]="userData.username" placeholder="jsmith" autocapitalize="none" required></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label stacked>Password</ion-label>
-            <ion-input type="password" name="password" [(ngModel)]="userData.password" placeholder="password"></ion-input>
+            <ion-input type="password" name="password" [(ngModel)]="userData.password" placeholder="password" required></ion-input>
           </ion-item>
 
           <button ion-button full color="success" type="submit" [disabled]="!registerForm.form.valid">Login</button>

@@ -11,6 +11,8 @@ export class LoginPage {
   loginFailed: boolean = false;
   isLoading: boolean = false;
 
+  districtPattern: RegExp = /[a-z]{2}-[a-z]+/i;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: RestProvider, private changeRef: ChangeDetectorRef) {
 
   }
