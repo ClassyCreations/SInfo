@@ -14,6 +14,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { RestProvider } from '../providers/rest/rest';
 import {OneSignal} from "@ionic-native/onesignal";
+import {GoogleAnalytics} from "@ionic-native/google-analytics";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {OneSignal} from "@ionic-native/onesignal";
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RestProvider,
-    OneSignal
+    OneSignal,
+    GoogleAnalytics
   ]
 })
 export class AppModule {}

@@ -9,6 +9,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 
 import { HomePage } from '../pages/home/home';
 import { CoursesPage } from '../pages/courses/courses';
+import {GoogleAnalytics} from "@ionic-native/google-analytics";
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +22,8 @@ export class MyApp {
   pages: Array<{title: string, component: any, icon: string}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-              public restProvider: RestProvider, private storage: Storage, private oneSignal: OneSignal) {
+              public restProvider: RestProvider, private storage: Storage, private oneSignal: OneSignal,
+              public ga: GoogleAnalytics) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -38,22 +40,29 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
 
+      // OneSignal
       this.oneSignal.startInit('8876072d-3330-40b6-baf9-fb953d06ae29', '193559139683');
       this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
-      this.oneSignal.handleNotificationReceived().subscribe(() => {
-        // do something when notification is received
+      this.oneSignal.handleNotificationReceived().subscribe((notification) => {
+        this.ga.trackEvent("notification", "received", notification.data.payload.notificationID);
       });
-      this.oneSignal.handleNotificationOpened().subscribe(() => {
-        // do something when a notification is opened
+      this.oneSignal.handleNotificationOpened().subscribe((notification) => {
+        this.ga.trackEvent("notification", "opened", notification.notification.payload.notificationID);
       });
-
       this.oneSignal.endInit();
+
+      this.ga.startTrackerWithId('UA-97256993-4')
+        .then(() => {
+          console.log('Google analytics is ready now');
+        })
+        .catch(e => console.log('Error starting GoogleAnalytics', e));
 
       this.restProvider.areCredsAvailable().subscribe(
         (res) => {
           console.log("User creds loaded from localStorage: "+res);
           if(res){
             console.log("DistrictId: ",RestProvider.districtId);
+            this.ga.setUserId(btoa(RestProvider.username));
             this.splashScreen.hide();
           }else{
             this.nav.push(LoginPage);
