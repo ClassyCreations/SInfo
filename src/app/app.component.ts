@@ -10,6 +10,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { HomePage } from '../pages/home/home';
 import { CoursesPage } from '../pages/courses/courses';
 import {GoogleAnalytics} from "@ionic-native/google-analytics";
+import {CodePush} from "@ionic-native/code-push";
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +24,7 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
               public restProvider: RestProvider, private storage: Storage, private oneSignal: OneSignal,
-              public ga: GoogleAnalytics) {
+              public ga: GoogleAnalytics, private codePush: CodePush) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -56,6 +57,8 @@ export class MyApp {
           console.log('Google analytics is ready now');
         })
         .catch(e => console.log('Error starting GoogleAnalytics', e));
+
+      this.codePush.sync({installMode: 2}).subscribe((syncStatus) => console.log(syncStatus));
 
       this.restProvider.areCredsAvailable().subscribe(
         (res) => {
