@@ -16,6 +16,7 @@ import { RestProvider } from '../providers/rest/rest';
 import {OneSignal} from "@ionic-native/onesignal";
 import {GoogleAnalytics} from "@ionic-native/google-analytics";
 import {CodePush} from "@ionic-native/code-push";
+import {AppVersion} from "@ionic-native/app-version";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {CodePush} from "@ionic-native/code-push";
     RestProvider,
     OneSignal,
     GoogleAnalytics,
-    CodePush
+    CodePush,
+    AppVersion
   ]
 })
 export class AppModule {}
