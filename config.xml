@@ -41,6 +41,7 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
         <preference name="CodePushDeploymentKey" value="TbTsMHh44Gmr-mPm92EnWxkL7dgaHk4G-ysWG " />
+        <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -88,9 +89,9 @@
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
-    <plugin name="cordova-sqlite-storage" spec="^2.1.2" />
+    <plugin name="cordova-sqlite-storage" spec="^2.1.4" />
     <plugin name="onesignal-cordova-plugin" spec="^2.2.4" />
-    <plugin name="cordova-plugin-google-analytics" spec="^1.8.3" />
-    <plugin name="cordova-plugin-code-push" spec="^1.10.1" />
+    <plugin name="cordova-plugin-google-analytics" spec="~1.8.3" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
+    <plugin name="cordova-plugin-code-push" spec="^1.10.1" />
 </widget>
