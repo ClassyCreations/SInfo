@@ -12,13 +12,24 @@
     An error has occurred. Please check you internet connection and retry. If the error persists, please report to an AspenCheck admin.
   </ion-card>
 
-  <ion-card class="schedule" *ngIf="blockOrder.length > 0">
-    <div *ngFor="let block of blockOrder; let index=index" [ngClass]="{'highlight': index == currentBlockNumber-1}">
+  <ion-card class="schedule" *ngIf="blockOrder.length > 0" (click)="toggleDaySchedule()">
+    <div class="block" *ngFor="let block of blockOrder; let index=index" [ngClass]="{'highlight': index == currentBlockNumber-1 && isSchool}">
       {{block}}
     </div>
   </ion-card>
 
-  <hr *ngIf="isSchool && announcements.length > 0">
+  <div class="daysSchedule" *ngIf="dayScheduleExpanded">
+    <ion-card class="schedule" *ngFor="let day of dayList; let index=index">
+      <div class="dayInfo">{{daysOrder[index]}}: {{day.dayNumber}}</div>
+      <div class="dayBlocks">
+        <div class="block" *ngFor="let block of day.blocks; let index=index">
+          {{block}}
+        </div>
+      </div>
+    </ion-card>
+  </div>
+
+  <hr *ngIf="blockOrder.length > 0 && announcements.length > 0">
 
   <ion-card class="announcements" *ngIf="announcements.length > 0">
     <div class="header">

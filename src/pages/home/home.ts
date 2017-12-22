@@ -14,10 +14,14 @@ export class HomePage {
   currentBlockNumber: number;
   currentDay: number = 0;
 
+  dayList: Object[][];
+  daysOrder: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
   announcements: Array<any> = [];
 
   scheduleError: boolean = false;
   announcementsError: boolean = false;
+  dayScheduleExpanded: boolean = false;
 
   scheduleProvider: Observable<any>;
   announcementsProvider: Observable<any>;
@@ -43,6 +47,7 @@ export class HomePage {
         this.currentDay = body.data.day || 0;
         this.isSchool = body.data.classInSession || false;
         this.currentBlockNumber = body.data.blockOfDay || 6;
+        this.dayList = this.getDayOrder(body.data.dayBlockOrder);
         this.changeRef.detectChanges();
       },
 
@@ -79,5 +84,23 @@ export class HomePage {
   refreshAnnouncements(){
     this.announcementsProvider = this.restProvider.getAnnouncements();
     this.subAnnouncements();
+  }
+
+  toggleDaySchedule(){
+    this.dayScheduleExpanded = !this.dayScheduleExpanded;
+    this.changeRef.detectChanges();
+  }
+
+  getDayOrder(days): Object[][]{
+    //Subtract mondayTransform from currentDay to get monday
+    const mondayTransform = new Date().getDay()-1;
+    let monDay = this.currentDay > mondayTransform ? this.currentDay - mondayTransform : this.currentDay - mondayTransform + 7;
+    const dayArray = [];
+    for(let i = 0; i < 5; i++){
+      dayArray.push({dayNumber: monDay, blocks: days[monDay]});
+      monDay++;
+      if(monDay > 7){monDay = 1}
+    }
+    return dayArray;
   }
 }

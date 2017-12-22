@@ -127,10 +127,11 @@ export class RestProvider {
             observer.error(false);
           }else{
             request(options, (err, res, body) => {
-              if(err){
+              body = allParse(body);
+              if(err || body.data === null){
                 observer.error(true);
               }else{
-                observer.next({res: res, body: allParse(body)});
+                observer.next({res: res, body: body});
               }
               observer.complete();
             })
@@ -149,8 +150,6 @@ export class RestProvider {
           url: `https://aspencheck.herokuapp.com/api/v1/${RestProvider.districtId}/announcements`
         };
 
-        //TODO: This needs to be changed such that the districtId is available
-        //For now the check for districtId is simply bypassed and ma-melrose is used
         if(typeof RestProvider.districtId === 'undefined'){
           observer.error(false);
         }else{
