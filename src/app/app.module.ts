@@ -3,12 +3,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
+import { Camera } from '@ionic-native/camera';
+import { QRScanner } from '@ionic-native/qr-scanner';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {CoursesPage} from '../pages/courses/courses';
 import {LoginPage} from "../pages/login/login";
 import { CourseDetailsPage } from "../pages/courseDetails/courseDetails";
+import { QrScannerPage } from "../pages/qr-scanner/qr-scanner";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +27,8 @@ import {AppVersion} from "@ionic-native/app-version";
     HomePage,
     LoginPage,
     CoursesPage,
-    CourseDetailsPage
+    CourseDetailsPage,
+    QrScannerPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,8 @@ import {AppVersion} from "@ionic-native/app-version";
     HomePage,
     LoginPage,
     CoursesPage,
-    CourseDetailsPage
+    CourseDetailsPage,
+    QrScannerPage
   ],
   providers: [
     StatusBar,
@@ -48,7 +53,9 @@ import {AppVersion} from "@ionic-native/app-version";
     OneSignal,
     GoogleAnalytics,
     CodePush,
-    AppVersion
+    AppVersion,
+    Camera,
+    QRScanner,
   ]
 })
 export class AppModule {}

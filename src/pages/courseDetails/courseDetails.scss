@@ -34,11 +34,21 @@ page-course-details{
   .workInfo{
     .assignments{
       width: 100%;
+      table-layout: fixed;
       td{
         padding: 8px;
       }
       th{
         padding: 10px;
+        white-space: nowrap;
+      }
+      .rotateIcon{
+        -moz-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+        margin-left: 2px;
       }
       tr:nth-child(even){
         background-color: #f8f8f8;

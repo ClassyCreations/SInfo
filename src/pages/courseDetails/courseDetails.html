@@ -22,12 +22,14 @@
   <ion-card class="workInfo" *ngIf="assignments">
     <table class="assignments">
       <tr>
-        <th>Assignment</th>
-        <th>Grade</th>
+        <th width="40%">Assignment</th>
+        <th width="35%" (click)="sortAssignments(1)">Credit<ion-icon class="rotateIcon" name="code"></ion-icon></th>
+        <th width="25%" (click)="sortAssignments(0)">Due<ion-icon class="rotateIcon" name="code"></ion-icon></th>
       </tr>
       <tr *ngFor="let item of assignments">
         <td class="name">{{item.name}}</td>
         <td class="credit">{{item.credit}}</td>
+        <td class="dateDue">{{dateFormat(item.dateDue)}}</td>
       </tr>
     </table>
   </ion-card>

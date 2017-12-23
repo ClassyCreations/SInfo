@@ -9,6 +9,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 
 import { HomePage } from '../pages/home/home';
 import { CoursesPage } from '../pages/courses/courses';
+import { QrScannerPage } from "../pages/qr-scanner/qr-scanner";
 import {GoogleAnalytics} from "@ionic-native/google-analytics";
 import {AppVersion} from "@ionic-native/app-version";
 import {CodePush} from "@ionic-native/code-push";
@@ -31,7 +32,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Schedule', component: HomePage, icon: 'calendar' },
-      { title: 'Courses', component: CoursesPage, icon: 'briefcase' }
+      { title: 'Courses', component: CoursesPage, icon: 'briefcase' },
+      { title: 'Scanner', component: QrScannerPage, icon: 'aperture' },
     ];
 
   }
