@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-card class="error" *ngIf="scheduleError || announcementsError">
-    An error has occurred. Please check you internet connection and retry. If the error persists, please report to an AspenCheck admin.
+    An error has occurred. Please check your internet connection and retry. If the error persists, please report to an AspenCheck admin.
   </ion-card>
 
   <ion-card class="schedule" *ngIf="blockOrder.length > 0" (click)="toggleDaySchedule()">
