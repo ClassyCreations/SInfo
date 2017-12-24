@@ -10,6 +10,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { HomePage } from '../pages/home/home';
 import { CoursesPage } from '../pages/courses/courses';
 import { QrScannerPage } from "../pages/qr-scanner/qr-scanner";
+import { SettingsPage } from "../pages/settings/settings";
 import {GoogleAnalytics} from "@ionic-native/google-analytics";
 import {AppVersion} from "@ionic-native/app-version";
 import {CodePush} from "@ionic-native/code-push";
@@ -90,11 +91,7 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
-  logout(){
-    RestProvider.username = null;
-    RestProvider.password = null;
-    RestProvider.districtId = null;
-    this.storage.clear();
-    this.nav.push(LoginPage);
+  goSettings(){
+    this.nav.push(SettingsPage);
   }
 }

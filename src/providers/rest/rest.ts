@@ -54,11 +54,47 @@ export class RestProvider {
               */
             this.storage.set('password', password);
             this.storage.set('districtId', districtId);
+            console.log("Executing get user info");
+            this.getUserInfo().subscribe();
           }
           observable.next(body.data);
         }
       })
     })
+  }
+
+  getUserInfo(){
+    console.log("Getting user info");
+    return Rx.Observable.create(observer => {
+      const options: Object = {
+        url: `http://aspencheck.herokuapp.com/api/v1/${RestProvider.districtId}/aspen/student`,
+        headers: {
+          "ASPEN_UNAME": RestProvider.username,
+          "ASPEN_PASS": RestProvider.password,
+        }
+      };
+
+      console.log("Will stuff work?,",RestProvider.districtId && RestProvider.username && RestProvider.password);
+      if(RestProvider.districtId && RestProvider.username && RestProvider.password){
+        request(options, (err, res, body) => {
+          if(err){
+            observer.next(false);
+          }else if(res.statusCode !== 200){
+            observer.next(false);
+          }else{
+            body = allParse(body);
+            console.log("User info: ",body);
+            this.storage.set("userId", body.data.info.stateID);
+            this.storage.set("yearOfGrad", body.data.info.yearOfGraduation);
+            this.storage.set("schoolName", body.data.info.schoolName);
+            this.storage.set("gradeLevel", body.data.info.gradeLevel);
+            observer.next(true);
+          }
+        })
+      }else{
+        observer.next(false)
+      }
+    });
   }
 
   areCredsAvailable(): Rx.Observable<any> {

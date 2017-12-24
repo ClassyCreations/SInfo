@@ -4,7 +4,7 @@
     <description />
     <author email="email" href="http://ionicframework.com/">CC</author>
     <author email="email" href="http://ionicframework.com/">Velv</author>
-    <content original-src="index.html" src="http://192.168.1.28:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -83,9 +83,6 @@
     <allow-navigation href="http://10.0.1.50:8101" />
     <allow-navigation href="http://10.10.195.28:8100" />
     <allow-navigation href="http://10.10.196.147:8100" />
-    <allow-navigation href="http://192.168.1.29:8100" />
-    <allow-navigation href="http://192.168.1.28:8100" />
-    <allow-navigation href="http://192.168.1.28:8001" />
     <engine name="android" spec="^6.4.0" />
     <engine name="browser" spec="5.0.1" />
     <engine name="ios" spec="4.5.4" />
@@ -101,4 +98,8 @@
     <plugin name="cordova-plugin-code-push" spec="^1.10.1" />
     <plugin name="cordova-plugin-qrscanner" spec="^2.5.0" />
     <plugin name="cordova-plugin-camera" spec="^3.0.0" />
+    <allow-navigation href="http://192.168.1.29:8100" />
+    <allow-navigation href="http://192.168.1.28:8100" />
+    <allow-navigation href="http://192.168.1.28:8001" />
+    <allow-navigation href="http://192.168.1.26:8100" />
 </widget>
