@@ -12,6 +12,7 @@ import {CoursesPage} from '../pages/courses/courses';
 import {LoginPage} from "../pages/login/login";
 import { CourseDetailsPage } from "../pages/courseDetails/courseDetails";
 import { QrScannerPage } from "../pages/qr-scanner/qr-scanner";
+import { SettingsPage } from "../pages/settings/settings";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,6 +21,7 @@ import {OneSignal} from "@ionic-native/onesignal";
 import {GoogleAnalytics} from "@ionic-native/google-analytics";
 import {CodePush} from "@ionic-native/code-push";
 import {AppVersion} from "@ionic-native/app-version";
+import { StorageProvider } from '../providers/storage/storage';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import {AppVersion} from "@ionic-native/app-version";
     LoginPage,
     CoursesPage,
     CourseDetailsPage,
-    QrScannerPage
+    QrScannerPage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import {AppVersion} from "@ionic-native/app-version";
     LoginPage,
     CoursesPage,
     CourseDetailsPage,
-    QrScannerPage
+    QrScannerPage,
+    SettingsPage
   ],
   providers: [
     StatusBar,
@@ -56,6 +60,7 @@ import {AppVersion} from "@ionic-native/app-version";
     AppVersion,
     Camera,
     QRScanner,
+    StorageProvider,
   ]
 })
 export class AppModule {}
