@@ -104,7 +104,6 @@ export class RestProvider {
       }else {
         this.credsObservable = this.checkSetUserCredsFromMemory().subscribe(
           (res) => {
-            console.log(res);
             observable.next(res || RestProvider.username != null && RestProvider.password != null && RestProvider.districtId != null);
             this.credFinished = true;
           }
