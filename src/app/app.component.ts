@@ -44,16 +44,20 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
 
-      // OneSignal
-      this.oneSignal.startInit('8876072d-3330-40b6-baf9-fb953d06ae29', '193559139683');
-      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
-      this.oneSignal.handleNotificationReceived().subscribe((notification) => {
-        this.ga.trackEvent("notification", "received", notification.data.payload.notificationID);
-      });
-      this.oneSignal.handleNotificationOpened().subscribe((notification) => {
-        this.ga.trackEvent("notification", "opened", notification.notification.payload.notificationID);
-      });
-      this.oneSignal.endInit();
+      if (this.platform.is('cordova')) {
+        // OneSignal
+        this.oneSignal.startInit('8876072d-3330-40b6-baf9-fb953d06ae29', '193559139683');
+        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+        this.oneSignal.handleNotificationReceived().subscribe((notification) => {
+          this.ga.trackEvent("notification", "received", notification.data.payload.notificationID);
+        });
+        this.oneSignal.handleNotificationOpened().subscribe((notification) => {
+          this.ga.trackEvent("notification", "opened", notification.notification.payload.notificationID);
+        });
+        this.oneSignal.endInit();
+
+        this.codePush.sync({installMode: 2}).subscribe((syncStatus) => console.log(syncStatus));
+      }
 
       // Google Analytics
       this.ga.startTrackerWithId('UA-97256993-4')
@@ -64,8 +68,6 @@ export class MyApp {
           });
         })
         .catch(e => console.log('Error starting GoogleAnalytics', e));
-
-      this.codePush.sync({installMode: 2}).subscribe((syncStatus) => console.log(syncStatus));
 
       // Really launch now
       this.restProvider.areCredsAvailable().subscribe(
