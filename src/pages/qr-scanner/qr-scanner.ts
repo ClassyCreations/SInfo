@@ -9,11 +9,12 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 export class QrScannerPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private qrScanner: QRScanner) {
-    this.setupCamera();
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad QrScannerPage');
+    this.setupCamera();
   }
 
   setupCamera(){
@@ -35,7 +36,7 @@ export class QrScannerPage {
 
           // show camera preview
           this.qrScanner.show();
-          window.document.querySelector('ion-page').classList.add('transparentBody')
+          window.document.querySelector('ion-page').classList.add('transparentBody');
 
           // wait for user to scan something, then the observable callback will be called
 
@@ -47,7 +48,7 @@ export class QrScannerPage {
           this.qrScanner.openSettings()
         } else {
           // permission was denied, but not permanently. You can ask for permission again at a later time.
-          console.log("Authorization was differed")
+          console.log("Authorization was differed");
         }
       })
       .catch((e: any) => console.log('Error is', e));
