@@ -11,7 +11,7 @@ import {LoginPage} from "../login/login";
 export class SettingsPage {
   user: Object;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: StorageProvider, private rest: RestProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: StorageProvider) {
     this.getUser();
   }
 

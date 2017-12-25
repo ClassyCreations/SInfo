@@ -4,7 +4,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {RestProvider} from "../providers/rest/rest";
 import {LoginPage} from "../pages/login/login";
-import { Storage } from '@ionic/storage';
 import { OneSignal } from '@ionic-native/onesignal';
 
 import { HomePage } from '../pages/home/home';
@@ -26,7 +25,7 @@ export class MyApp {
   pages: Array<{title: string, component: any, icon: string}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-              public restProvider: RestProvider, private storage: Storage, private oneSignal: OneSignal,
+              public restProvider: RestProvider, private oneSignal: OneSignal,
               public ga: GoogleAnalytics, private appVersion: AppVersion, private codePush: CodePush) {
     this.initializeApp();
 
