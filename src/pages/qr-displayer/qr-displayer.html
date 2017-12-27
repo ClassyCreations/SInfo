@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>qr-displayer</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card class="qrContent">
+    <ion-card-header class="title">{{title}}</ion-card-header>
+    <ion-card-content>
+      <qr-code class="qr" [value]="value"></qr-code>
+      <p>{{content}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

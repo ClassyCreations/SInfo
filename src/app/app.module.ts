@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
 import { QRScanner } from '@ionic-native/qr-scanner';
+import { QRCodeModule } from 'angular2-qrcode';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -13,6 +14,7 @@ import {LoginPage} from "../pages/login/login";
 import { CourseDetailsPage } from "../pages/courseDetails/courseDetails";
 import { QrScannerPage } from "../pages/qr-scanner/qr-scanner";
 import { SettingsPage } from "../pages/settings/settings";
+import { QrDisplayerPage } from "../pages/qr-displayer/qr-displayer";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -31,11 +33,13 @@ import { StorageProvider } from '../providers/storage/storage';
     CoursesPage,
     CourseDetailsPage,
     QrScannerPage,
-    SettingsPage
+    SettingsPage,
+    QrDisplayerPage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    QRCodeModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
   ],
@@ -47,7 +51,8 @@ import { StorageProvider } from '../providers/storage/storage';
     CoursesPage,
     CourseDetailsPage,
     QrScannerPage,
-    SettingsPage
+    SettingsPage,
+    QrDisplayerPage
   ],
   providers: [
     StatusBar,

@@ -10,6 +10,7 @@ import { HomePage } from '../pages/home/home';
 import { CoursesPage } from '../pages/courses/courses';
 import { QrScannerPage } from "../pages/qr-scanner/qr-scanner";
 import { SettingsPage } from "../pages/settings/settings";
+import { QrDisplayerPage } from "../pages/qr-displayer/qr-displayer";
 import {GoogleAnalytics} from "@ionic-native/google-analytics";
 import {AppVersion} from "@ionic-native/app-version";
 import {CodePush} from "@ionic-native/code-push";
@@ -34,6 +35,7 @@ export class MyApp {
       { title: 'Schedule', component: HomePage, icon: 'calendar' },
       { title: 'Courses', component: CoursesPage, icon: 'briefcase' },
       { title: 'Scanner', component: QrScannerPage, icon: 'aperture' },
+      { title: 'Qr', component: QrDisplayerPage, icon: 'aperture' },
     ];
 
   }

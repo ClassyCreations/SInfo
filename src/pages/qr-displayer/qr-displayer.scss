@@ -1,0 +1,12 @@
+page-qr-displayer {
+  .qrContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .title{
+      font-size: 20px;
+      padding-bottom: 0;
+    }
+  }
+}

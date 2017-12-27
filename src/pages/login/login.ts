@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {RestProvider} from "../../providers/rest/rest";
+import { HomePage } from "../home/home";
 
 @Component({
   selector: 'page-login',
@@ -28,7 +29,7 @@ export class LoginPage {
             console.log("Attemped Login: ",res);
             this.isLoading = false;
             if(res){
-              this.navCtrl.pop();
+              this.navCtrl.setRoot(HomePage);
             }else{
               this.loginFailed = true;
               this.changeRef.detectChanges();
