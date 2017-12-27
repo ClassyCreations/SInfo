@@ -2,6 +2,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {RestProvider} from "../../providers/rest/rest";
 import { HomePage } from "../home/home";
+import { ApiTesterPage } from "../api-tester/api-tester";
 
 @Component({
   selector: 'page-login',
@@ -38,4 +39,7 @@ export class LoginPage {
     }
   }
 
+  testApi(){
+    this.navCtrl.setRoot(ApiTesterPage);
+  }
 }

@@ -1,0 +1,32 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button (click)="login()">Go To Login</button>
+    <ion-title>apiTester</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form (ngSubmit)="logForm()">
+    <ion-item>
+      <ion-label>districtId</ion-label>
+      <ion-input type="text" [(ngModel)]="formData.district" name="district"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Username</ion-label>
+      <ion-input type="text" [(ngModel)]="formData.username" name="username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input type="password" [(ngModel)]="formData.password" name="password"></ion-input>
+    </ion-item>
+    <button ion-button type="submit" block>Submit data</button>
+  </form>
+  <h3>Responses:</h3>
+  <ion-item *ngFor="let res of responses">
+    <h2>{{res.desc}}</h2>
+    <ion-scroll scrollX="true">{{res.res}}</ion-scroll>
+  </ion-item>
+</ion-content>

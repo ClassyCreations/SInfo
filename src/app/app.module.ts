@@ -15,6 +15,7 @@ import { CourseDetailsPage } from "../pages/courseDetails/courseDetails";
 import { QrScannerPage } from "../pages/qr-scanner/qr-scanner";
 import { SettingsPage } from "../pages/settings/settings";
 import { QrDisplayerPage } from "../pages/qr-displayer/qr-displayer";
+import { ApiTesterPage } from "../pages/api-tester/api-tester";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -34,7 +35,8 @@ import { StorageProvider } from '../providers/storage/storage';
     CourseDetailsPage,
     QrScannerPage,
     SettingsPage,
-    QrDisplayerPage
+    QrDisplayerPage,
+    ApiTesterPage
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { StorageProvider } from '../providers/storage/storage';
     CourseDetailsPage,
     QrScannerPage,
     SettingsPage,
-    QrDisplayerPage
+    QrDisplayerPage,
+    ApiTesterPage
   ],
   providers: [
     StatusBar,
