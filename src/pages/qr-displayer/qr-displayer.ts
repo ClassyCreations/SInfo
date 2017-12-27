@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 @Component({
